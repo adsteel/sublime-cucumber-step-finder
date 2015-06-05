@@ -102,7 +102,10 @@ class MatchStepCommand(CucumberBaseCommand):
 
   def cut_words(self, text):
      words = self.settings_get('cucumber_code_keywords')
+     regex_keywords = self.settings_get('regex_protected_keywords')
+
      upcased = [up.capitalize() for up in words]
+     [upcased.append("\\" + keyword) for keyword in regex_keywords]
      expression = "^{0}".format('|^'.join(upcased))
 
      pattern = re.compile(expression)
